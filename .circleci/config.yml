@@ -44,7 +44,7 @@ commands:
 jobs:
   build_test_deploy:
     environment:
-      regression_status: ""
+      regression_status: 2
       image_name: model-cmm
     executor: sbt_executor
     steps:
@@ -53,7 +53,7 @@ jobs:
       - print_test
       - when:
           condition: 
-             equals: ["$regression_status", "1"]
+             equals: ["$regression_status", "2"]
           steps:
             - setup_remote_docker
 
