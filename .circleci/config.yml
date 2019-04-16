@@ -4,11 +4,11 @@ version: 2.1
 executors:
   sbt_executor:
     parameters:
-      JDK_VERSION:
+      RUBY_VERSION:
         type: string
-        default: 11.0.2-jdk
+        default: 2.4.1
     docker:
-      - image: circleci/openjdk:<< parameters.JDK_VERSION >>
+      - image: - image: circleci/ruby:<< parameters.RUBY_VERSION >>
     working_directory: ~/repo
     environment:
       JVM_OPTS: -Xmx3200m
@@ -60,7 +60,11 @@ jobs:
     steps:
       - checkout
       - compile_test
-      - print_test
+      - run: |
+          echo "before REG_CHECK = ${REG_CHECK}"
+          source $BASH_ENV
+          REG_CHECK=$regression_status
+          echo "after REG_CHECK = ${REG_CHECK}"
       - when:
           condition: << parameters.REG_CHECK >>
           steps:
