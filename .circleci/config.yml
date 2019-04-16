@@ -46,7 +46,7 @@ jobs:
     steps:
       - checkout
       - compile_test
-      - run: echo "after next REG_CHECK = << parameters.REG_CHECK >>"
+      - run: echo "after next REG_CHECK = ${<< parameters.REG_CHECK >>}"
       - when:
           condition: << parameters.REG_CHECK >>
           steps:
