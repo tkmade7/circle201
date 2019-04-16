@@ -8,7 +8,7 @@ executors:
         type: string
         default: 2.4.1
     docker:
-      - image: - image: circleci/ruby:<< parameters.RUBY_VERSION >>
+      - image: circleci/ruby:<< parameters.RUBY_VERSION >>
     working_directory: ~/repo
     environment:
       JVM_OPTS: -Xmx3200m
