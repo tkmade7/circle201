@@ -5,7 +5,7 @@ executors:
   parameters:
     JDK_VERSION:
       type: string
-      default: "11.0.2-jdk"
+      default: 11.0.2-jdk
   sbt_executor:
     docker:
       - image: circleci/openjdk:<< parameters.JDK_VERSION >>
