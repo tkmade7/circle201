@@ -65,7 +65,7 @@ jobs:
           source $BASH_ENV
           REG_CHECK=$regression_status
           echo "after REG_CHECK = ${REG_CHECK}"
-      - run: echo "after next REG_CHECK = ${REG_CHECK}"
+      - run: echo "after next REG_CHECK = << parameters.REG_CHECK >>"
       - when:
           condition: << parameters.REG_CHECK >>
           steps:
