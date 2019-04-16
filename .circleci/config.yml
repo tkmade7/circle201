@@ -27,6 +27,7 @@ commands:
              circleci-agent step halt
           else
              export regression_status=1 >> $BASH_ENV
+             source $BASH_ENV
              echo "After export regression_status = $regression_status"
           fi
           
