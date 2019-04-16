@@ -18,22 +18,15 @@ executors:
 commands:
   compile_test:
     description: "Manage dependency cache with compile and test"
-    parameters:
-      image_name:
-        type: string
-        default: ""
-      regression_status:
-        type: string
-        default: "0"
     steps:
       - run: |
-          echo "Value of image_name is << parameters.image_name >>"
-          echo "Value of regression_status is << parameters.regression_status >>"
-          if [[ -z "${<< parameters.image_name >>}" ]]; then
+          echo "Value of image_name is $image_name"
+          echo "Value of regression_status is $regression_status"
+          if [[ -z "$image_name" ]]; then
              echo "image_name is null, exiting"
              circleci-agent step halt
           else
-             regression_status=1
+             export regression_status=1 >> $BASH_ENV
           fi
           
 
@@ -41,18 +34,16 @@ commands:
 
 jobs:
   build_test_deploy:
-    parameters:
-      regression_status:
-        type: string
-      image_name:
-        type: string
+    environment:
+      regression_status: 2
+      image_name: model-cmm
     executor: sbt_executor
     steps:
       - checkout
       - compile_test
       - when:
           condition: 
-             equals: ["<< parameters.regression_status >>", "1"]
+             equals: ["$regression_status", "1"]
           steps:
             - setup_remote_docker
 
@@ -63,8 +54,6 @@ workflows:
   build:
     jobs:
       - build_test_deploy:
-          image_name: model-cmm
-          regression_status: "2"
           filters:
             branches:
               only: master
