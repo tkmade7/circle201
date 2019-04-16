@@ -34,7 +34,6 @@ commands:
     description: "printing the environmebt value"
     steps:
       - run: |
-          source $BASH_ENV
           echo "Next command regression_status = $regression_status"
 
 
