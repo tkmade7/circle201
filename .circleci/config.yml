@@ -37,7 +37,7 @@ commands:
     parameters:
       REG_CHECK:
         type: string
-        default: ""
+        default: false
     description: "printing the environmebt value"
     steps:
       - run: |
@@ -52,7 +52,7 @@ jobs:
     parameters:
       REG_CHECK:
         type: string
-        default: ""
+        default: false
     environment:
       regression_status: false
       image_name: model-cmm
@@ -65,6 +65,7 @@ jobs:
           source $BASH_ENV
           REG_CHECK=$regression_status
           echo "after REG_CHECK = ${REG_CHECK}"
+      - run: echo "after next REG_CHECK = ${REG_CHECK}"
       - when:
           condition: << parameters.REG_CHECK >>
           steps:
