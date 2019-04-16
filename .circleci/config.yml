@@ -2,11 +2,11 @@ version: 2.1
 
 # Executors definition
 executors:
-  parameters:
-    JDK_VERSION:
-      type: string
-      default: 11.0.2-jdk
   sbt_executor:
+    parameters:
+      JDK_VERSION:
+        type: string
+        default: 11.0.2-jdk
     docker:
       - image: circleci/openjdk:<< parameters.JDK_VERSION >>
     working_directory: ~/repo
