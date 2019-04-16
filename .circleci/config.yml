@@ -52,8 +52,7 @@ jobs:
       - compile_test
       - print_test
       - when:
-          condition: 
-             equals: ["$regression_status", "2"]
+          condition: ["$regression_status" == "2"]
           steps:
             - setup_remote_docker
 
