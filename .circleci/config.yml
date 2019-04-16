@@ -26,8 +26,9 @@ commands:
              echo "image_name is null, exiting"
              circleci-agent step halt
           else
-             export regression_status=1 >> $BASH_ENV
-             source $BASH_ENV
+             export regression_status=1 >> ~/.bashrc
+             echo "BASH_ENV=$BASH_ENV"
+             source ~/.bashrc
              echo "After export regression_status = $regression_status"
           fi
           
@@ -36,7 +37,7 @@ commands:
     description: "printing the environmebt value"
     steps:
       - run: |
-          source $BASH_ENV
+          source ~/.bashrc
           echo "Next command regression_status = $regression_status"
 
 
