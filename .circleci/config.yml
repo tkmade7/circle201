@@ -43,7 +43,7 @@ commands:
 jobs:
   build_test_deploy:
     environment:
-      regression_status: 2
+      regression_status: ""
       image_name: model-cmm
     executor: sbt_executor
     steps:
