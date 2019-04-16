@@ -27,9 +27,14 @@ commands:
              circleci-agent step halt
           else
              export regression_status=1 >> $BASH_ENV
+             echo "After export regression_status = $regression_status"
           fi
           
 
+  print_test:
+    description: "printing the environmebt value"
+    steps:
+      - run: echo "Next command regression_status = $regression_status"
 
 
 jobs:
@@ -41,6 +46,7 @@ jobs:
     steps:
       - checkout
       - compile_test
+      - print_test
       - when:
           condition: 
              equals: ["$regression_status", "1"]
