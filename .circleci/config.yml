@@ -37,7 +37,6 @@ commands:
     parameters:
       REG_CHECK:
         type: string
-        default: false
     description: "printing the environmebt value"
     steps:
       - run: |
@@ -52,7 +51,6 @@ jobs:
     parameters:
       REG_CHECK:
         type: string
-        default: false
     environment:
       regression_status: false
       image_name: model-cmm
