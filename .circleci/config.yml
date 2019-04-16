@@ -50,8 +50,8 @@ jobs:
   build_test_deploy:
     parameters:
       REG_CHECK:
-        type: string
-        default: false
+        type: env_var_name
+        default: regression_status
     environment:
       regression_status: false
       image_name: model-cmm
