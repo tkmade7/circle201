@@ -44,7 +44,7 @@ commands:
           source $BASH_ENV
           REG_CHECK=$regression_status
           echo "Next command regression_status = $regression_status"
-          echo "REG_CHECK = ${<< parameters.REG_CHECK >>}"
+          echo "REG_CHECK = ${REG_CHECK}"
 
 
 jobs:
