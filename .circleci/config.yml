@@ -37,6 +37,7 @@ commands:
     parameters:
       REG_CHECK:
         type: string
+        default: false
     description: "printing the environmebt value"
     steps:
       - run: |
