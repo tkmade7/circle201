@@ -33,19 +33,6 @@ commands:
           fi
           
 
-  print_test:
-    parameters:
-      REG_CHECK:
-        type: string
-    description: "printing the environmebt value"
-    steps:
-      - run: |
-          source $BASH_ENV
-          REG_CHECK=$regression_status
-          echo "Next command regression_status = $regression_status"
-          echo "REG_CHECK = ${REG_CHECK}"
-
-
 jobs:
   build_test_deploy:
     parameters:
@@ -59,11 +46,6 @@ jobs:
     steps:
       - checkout
       - compile_test
-      - run: |
-          echo "before REG_CHECK = ${REG_CHECK}"
-          source $BASH_ENV
-          REG_CHECK=$regression_status
-          echo "after REG_CHECK = ${REG_CHECK}"
       - run: echo "after next REG_CHECK = << parameters.REG_CHECK >>"
       - when:
           condition: << parameters.REG_CHECK >>
