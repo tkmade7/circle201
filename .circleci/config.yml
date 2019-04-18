@@ -37,17 +37,10 @@ commands:
     parameters:
       image_name:
         type: string
-      env:
+        default: circle201
+      environ:
         type: string
-      AWS_ACCESS_KEY_ID: 
-        type: env_var_name
-        default: CI_VAR_KEY
-      AWS_SECRET_ACCESS_KEY: 
-        type: env_var_name
-        default: CI_VAR_SECRET
-      AWS_DEFAULT_REGION:
-        type: env_var_name
-        default: CI_VAR_REGION
+        default: ci
     steps:
       - run: |
           echo "image_name=$image_name"
