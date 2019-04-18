@@ -14,7 +14,6 @@ executors:
       JVM_OPTS: -Xmx3200m
       TERM: dumb
 
-
 commands:
   compile_test:
     description: "Manage dependency cache with compile and test"
@@ -31,7 +30,55 @@ commands:
              source $BASH_ENV
              echo "After export regression_status = $regression_status"
           fi
-          
+
+
+  check_env_vars:
+    description: "check and print the environment vars"
+    parameters:
+      image_name:
+        type: string
+      env:
+        type: string
+      AWS_ACCESS_KEY_ID: 
+        type: env_var_name
+        default: CI_VAR_KEY
+      AWS_SECRET_ACCESS_KEY: 
+        type: env_var_name
+        default: CI_VAR_SECRET
+      AWS_DEFAULT_REGION:
+        type: env_var_name
+        default: CI_VAR_REGION
+    steps:
+      - run: |
+          echo "image_name=$image_name"
+          echo "environ=$environ"
+          if [[ -z "$environ" ]]; then
+             echo "environ is null, exiting"
+             circleci-agent step halt
+          elif [ "$environ" = "ci" ]; then
+             echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
+             echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
+             echo "ENV_REGION=$ENV_REGION"
+             echo 'export ENV_ACCESS_KEY=${CI_VAR_KEY}' >> $BASH_ENV
+             echo 'export ENV_SECRET_KEY=${CI_VAR_SECRET}' >> $BASH_ENV
+             echo 'export ENV_REGION=${CI_VAR_REGION}' >> $BASH_ENV
+             source $BASH_ENV
+             echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
+             echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
+             echo "ENV_REGION=$ENV_REGION"
+          elif [ "$environ" = "qa" ]; then
+             echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
+             echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
+             echo "ENV_REGION=$ENV_REGION"
+             echo 'export ENV_ACCESS_KEY=${QA_VAR_KEY}' >> $BASH_ENV
+             echo 'export ENV_SECRET_KEY=${QA_VAR_SECRET}' >> $BASH_ENV
+             echo 'export ENV_REGION=${QA_VAR_REGION}' >> $BASH_ENV
+             source $BASH_ENV
+             echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
+             echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
+             echo "ENV_REGION=$ENV_REGION"
+          fi
+
 
 jobs:
   build_test_deploy:
@@ -39,12 +86,18 @@ jobs:
       REG_CHECK:
         type: env_var_name
         default: regression_status
+      image_name:
+        type: string
+      environ:
+        type: string
     environment:
-      regression_status: false
-      image_name: model-cmm
+      ENV_ACCESS_KEY: ""
+      ENV_SECRET_KEY: ""
+      ENV_REGION: ""
     executor: sbt_executor
     steps:
       - checkout
+      - check_env_vars
       - compile_test
       - run: echo "after next REG_CHECK = ${<< parameters.REG_CHECK >>}"
       - when:
@@ -59,6 +112,17 @@ workflows:
   build:
     jobs:
       - build_test_deploy:
+          image_name: circle201
+          environ: ci
+          context: ers-rafa-ci
           filters:
             branches:
               only: master
+
+      - build_test_deploy:
+          image_name: circle201
+          environ: qa
+          context: ers-rafa-qa
+          filters:
+            branches:
+              only: qa
