@@ -40,7 +40,7 @@ commands:
         default: circle201
       environ:
         type: string
-        default: ci
+        default: qa
     steps:
       - run: 
           name: "check_env_vars"
