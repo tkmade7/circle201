@@ -118,7 +118,7 @@ workflows:
 
       - build_test_deploy:
           image_name: circle301
-          environ: QA
+          environ: qa
           context: ers-rafa-qa
           filters:
             branches:
