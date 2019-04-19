@@ -45,9 +45,6 @@ commands:
                circleci-agent step halt
             elif [ ${environ} = "ci" ]; then
                echo "Inside CI block"
-               echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
-               echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
-               echo "ENV_REGION=$ENV_REGION"
                echo 'export ENV_ACCESS_KEY=${CI_VAR_KEY}' >> $BASH_ENV
                echo 'export ENV_SECRET_KEY=${CI_VAR_SECRET}' >> $BASH_ENV
                echo 'export ENV_REGION=${CI_VAR_REGION}' >> $BASH_ENV
@@ -57,9 +54,6 @@ commands:
                echo "ENV_REGION=$ENV_REGION"
             elif [ ${environ} = "qa" ]; then
                echo "Inside QA block"
-               echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
-               echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
-               echo "ENV_REGION=$ENV_REGION"
                echo 'export ENV_ACCESS_KEY=${QA_VAR_KEY}' >> $BASH_ENV
                echo 'export ENV_SECRET_KEY=${QA_VAR_SECRET}' >> $BASH_ENV
                echo 'export ENV_REGION=${QA_VAR_REGION}' >> $BASH_ENV
@@ -80,11 +74,6 @@ jobs:
         type: string
       environ:
         type: string
-    environment:
-      regression_status: false
-      ENV_ACCESS_KEY: ""
-      ENV_SECRET_KEY: ""
-      ENV_REGION: ""
     executor: sbt_executor
     steps:
       - checkout
