@@ -47,7 +47,7 @@ commands:
           command: |
             echo "second check image_name= << parameters.image_name >>"
             echo "second check environ= << parameters.environ >>"
-            if [[ -z "${<< parameters.environ >>}" ]]; then
+            if [[ -z ${<< parameters.environ >>} ]]; then
                echo "environ is null, exiting"
                circleci-agent step halt
             elif [ "$environ" = "ci" ]; then
