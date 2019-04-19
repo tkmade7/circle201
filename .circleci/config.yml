@@ -17,13 +17,9 @@ executors:
 commands:
   compile_test:
     description: "Manage dependency cache with compile and test"
-    parameters:
-      d_val:
-        type: string
     steps:
       - run: |
           echo "Value of image_name is $image_name"
-          echo "Value of d_val is << parameters.d_val >>"
           echo "Value of regression_status is $regression_status"
           if [[ -z "$image_name" ]]; then
              echo "image_name is null, exiting"
@@ -36,6 +32,42 @@ commands:
           fi
 
 
+  check_env_vars:
+    description: "check and print the environment vars"
+    steps:
+      - run: 
+          name: "check_env_vars"
+          command: |
+            echo "second check image_name= << parameters.image_name >>"
+            echo "second check environ= << parameters.environ >>"
+            if [[ -z ${environ} ]]; then
+               echo "environ is null, exiting"
+               circleci-agent step halt
+            elif [ ${environ} = "ci" ]; then
+               echo "Inside CI block"
+               echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
+               echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
+               echo "ENV_REGION=$ENV_REGION"
+               echo 'export ENV_ACCESS_KEY=${CI_VAR_KEY}' >> $BASH_ENV
+               echo 'export ENV_SECRET_KEY=${CI_VAR_SECRET}' >> $BASH_ENV
+               echo 'export ENV_REGION=${CI_VAR_REGION}' >> $BASH_ENV
+               source $BASH_ENV
+               echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
+               echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
+               echo "ENV_REGION=$ENV_REGION"
+            elif [ ${environ} = "qa" ]; then
+               echo "Inside QA block"
+               echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
+               echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
+               echo "ENV_REGION=$ENV_REGION"
+               echo 'export ENV_ACCESS_KEY=${QA_VAR_KEY}' >> $BASH_ENV
+               echo 'export ENV_SECRET_KEY=${QA_VAR_SECRET}' >> $BASH_ENV
+               echo 'export ENV_REGION=${QA_VAR_REGION}' >> $BASH_ENV
+               source $BASH_ENV
+               echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
+               echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
+               echo "ENV_REGION=$ENV_REGION"
+            fi
 
 
 jobs:
@@ -48,8 +80,6 @@ jobs:
         type: string
       environ:
         type: string
-      d_val:
-        type: string
     environment:
       regression_status: false
       ENV_ACCESS_KEY: ""
@@ -61,10 +91,11 @@ jobs:
       - run: echo "first check image_name = << parameters.image_name >>"
       - run: echo "first check environ = << parameters.environ >>"
       - run: |
-          echo 'export QA_CHECK=<< parameters.image_name >>' >> $BASH_ENV
+          echo 'export image_name=<< parameters.image_name >>' >> $BASH_ENV
+          echo 'export environ=<< parameters.environ >>' >> $BASH_ENV
           source $BASH_ENV
-          echo "QA check {QA}= ${QA_CHECK}"
-      # - check_env_vars
+          echo "local image_name = ${image_name}"
+      - check_env_vars
       # - compile_test
       # - when:
           # condition: << parameters.REG_CHECK >>
@@ -88,7 +119,6 @@ workflows:
       - build_test_deploy:
           image_name: circle301
           environ: QA
-          d_val: Testing
           context: ers-rafa-qa
           filters:
             branches:
