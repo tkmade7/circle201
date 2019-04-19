@@ -42,7 +42,9 @@ commands:
         type: string
         default: ci
     steps:
-      - run: |
+      - run: 
+        name: "check_env_vars"
+        command: |
           echo "image_name=$image_name"
           echo "environ=$environ"
           if [[ -z "$environ" ]]; then
@@ -90,9 +92,10 @@ jobs:
     executor: sbt_executor
     steps:
       - checkout
+      - run: echo "first check image_name= ${<< parameters.image_name >>}"
+      - run: echo "first check environ= ${<< parameters.environ >>}"
       - check_env_vars
       - compile_test
-      - run: echo "after next REG_CHECK = ${<< parameters.REG_CHECK >>}"
       - when:
           condition: << parameters.REG_CHECK >>
           steps:
