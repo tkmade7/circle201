@@ -40,6 +40,9 @@ jobs:
       REG_CHECK:
         type: env_var_name
         default: regression_status
+      QA_CHECK:
+        type: env_var_name
+        default: image_name
       image_name:
         type: string
       environ:
@@ -54,6 +57,7 @@ jobs:
       - checkout
       - run: echo "first check image_name = << parameters.image_name >>"
       - run: echo "first check environ = << parameters.environ >>"
+      - run: echo "QA check = << parameters.QA_CHECK >>"
       # - check_env_vars
       # - compile_test
       # - when:
