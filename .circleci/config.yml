@@ -47,10 +47,10 @@ commands:
           command: |
             echo "second check image_name= << parameters.image_name >>"
             echo "second check environ= << parameters.environ >>"
-            if [[ -z ${<< parameters.environ >>} ]]; then
+            if [[ -z << parameters.environ >> ]]; then
                echo "environ is null, exiting"
                circleci-agent step halt
-            elif [ "$environ" = "ci" ]; then
+            elif [ << parameters.environ >> = "ci" ]; then
                echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
                echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
                echo "ENV_REGION=$ENV_REGION"
@@ -61,7 +61,7 @@ commands:
                echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
                echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
                echo "ENV_REGION=$ENV_REGION"
-            elif [ "$environ" = "qa" ]; then
+            elif [ << parameters.environ >> = "qa" ]; then
                echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
                echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
                echo "ENV_REGION=$ENV_REGION"
