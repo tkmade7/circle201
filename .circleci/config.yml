@@ -51,6 +51,7 @@ commands:
                echo "environ is null, exiting"
                circleci-agent step halt
             elif [ << parameters.environ >> = "ci" ]; then
+               echo "Inside CI block"
                echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
                echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
                echo "ENV_REGION=$ENV_REGION"
@@ -62,6 +63,7 @@ commands:
                echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
                echo "ENV_REGION=$ENV_REGION"
             elif [ << parameters.environ >> = "qa" ]; then
+               echo "Inside QA block"
                echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
                echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
                echo "ENV_REGION=$ENV_REGION"
