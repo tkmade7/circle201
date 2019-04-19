@@ -58,8 +58,10 @@ jobs:
       - run: echo "first check image_name = << parameters.image_name >>"
       - run: echo "first check environ = << parameters.environ >>"
       - run: |
-          QA_CHECK= << parameters.image_name >>
+          QA_CHECK=<< parameters.image_name >>
           echo "QA check = << parameters.QA_CHECK >>"
+          echo "QA check {} = ${<< parameters.QA_CHECK >>}"
+          echo "QA check {QA}= ${QA_CHECK}"
       # - check_env_vars
       # - compile_test
       # - when:
