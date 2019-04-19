@@ -57,7 +57,7 @@ jobs:
       - checkout
       - run: echo "first check image_name = << parameters.image_name >>"
       - run: echo "first check environ = << parameters.environ >>"
-      - run: echo "QA check = << parameters.QA_CHECK >>"
+      - run: echo "QA check = ${<< parameters.QA_CHECK >>}"
       # - check_env_vars
       # - compile_test
       # - when:
