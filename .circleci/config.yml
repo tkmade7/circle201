@@ -52,8 +52,8 @@ jobs:
     executor: sbt_executor
     steps:
       - checkout
-      - run: echo "first check image_name= ${<< parameters.image_name >>}"
-      - run: echo "first check environ= ${<< parameters.environ >>}"
+      - run: echo "first check image_name= << parameters.image_name >>"
+      - run: echo "first check environ= << parameters.environ >>"
       # - check_env_vars
       # - compile_test
       # - when:
