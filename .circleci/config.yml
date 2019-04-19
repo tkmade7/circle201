@@ -76,8 +76,8 @@ workflows:
               only: master
 
       - build_test_deploy:
-          image_name: circle201
-          environ: qa
+          image_name: circle301
+          environ: QA
           context: ers-rafa-qa
           filters:
             branches:
