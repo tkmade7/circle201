@@ -41,8 +41,8 @@ jobs:
         type: env_var_name
         default: regression_status
       QA_CHECK:
-        type: env_var_name
-        default: image_name
+        type: string
+        default: ${image_name}
       image_name:
         type: string
       environ:
