@@ -37,10 +37,8 @@ commands:
     parameters:
       image_name:
         type: string
-        default: circle201
       environ:
         type: string
-        default: qa
     steps:
       - run: 
           name: "check_env_vars"
@@ -85,8 +83,10 @@ jobs:
         default: regression_status
       image_name:
         type: string
+        default: circle201
       environ:
         type: string
+        default: qa
     environment:
       regression_status: false
       ENV_ACCESS_KEY: ""
