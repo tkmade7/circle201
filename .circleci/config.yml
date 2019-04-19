@@ -31,6 +31,7 @@ commands:
              echo "After export regression_status = $regression_status"
           fi
 
+
   check_env_vars:
     description: "check and print the environment vars"
     parameters:
@@ -44,9 +45,9 @@ commands:
       - run: 
           name: "check_env_vars"
           command: |
-            echo "second check image_name= ${<< parameters.image_name >>}"
-            echo "second check environ= ${<< parameters.environ >>}"
-            if [[ -z "$environ" ]]; then
+            echo "second check image_name= << parameters.image_name >>"
+            echo "second check environ= << parameters.environ >>"
+            if [[ -z "${<< parameters.environ >>}" ]]; then
                echo "environ is null, exiting"
                circleci-agent step halt
             elif [ "$environ" = "ci" ]; then
@@ -73,6 +74,7 @@ commands:
                echo "ENV_REGION=$ENV_REGION"
             fi
 
+
 jobs:
   build_test_deploy:
     parameters:
@@ -91,8 +93,8 @@ jobs:
     executor: sbt_executor
     steps:
       - checkout
-      - run: echo "first check image_name= << parameters.image_name >>"
-      - run: echo "first check environ= << parameters.environ >>"
+      - run: echo "first check image_name = << parameters.image_name >>"
+      - run: echo "first check environ = << parameters.environ >>"
       - check_env_vars
       # - compile_test
       # - when:
