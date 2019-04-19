@@ -40,9 +40,6 @@ jobs:
       REG_CHECK:
         type: env_var_name
         default: regression_status
-      QA_CHECK:
-        type: string
-        default: ""
       image_name:
         type: string
       environ:
@@ -58,9 +55,8 @@ jobs:
       - run: echo "first check image_name = << parameters.image_name >>"
       - run: echo "first check environ = << parameters.environ >>"
       - run: |
-          QA_CHECK=<< parameters.image_name >>
-          echo "QA check = << parameters.QA_CHECK >>"
-          echo "QA check {} = ${<< parameters.QA_CHECK >>}"
+          echo 'export QA_CHECK=<< parameters.image_name >>' >> $BASH_ENV
+          source $BASH_ENV
           echo "QA check {QA}= ${QA_CHECK}"
       # - check_env_vars
       # - compile_test
