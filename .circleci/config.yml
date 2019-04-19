@@ -48,6 +48,8 @@ jobs:
         type: string
       environ:
         type: string
+      d_val:
+        type: string
     environment:
       regression_status: false
       ENV_ACCESS_KEY: ""
