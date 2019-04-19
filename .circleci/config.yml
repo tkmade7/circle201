@@ -38,8 +38,8 @@ commands:
       - run: 
           name: "check_env_vars"
           command: |
-            echo "second check image_name= << parameters.image_name >>"
-            echo "second check environ= << parameters.environ >>"
+            echo "second check image_name=${image_name}"
+            echo "second check environ=${environ}"
             if [[ -z ${environ} ]]; then
                echo "environ is null, exiting"
                circleci-agent step halt
