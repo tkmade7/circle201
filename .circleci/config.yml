@@ -86,6 +86,7 @@ jobs:
       environ:
         type: string
     environment:
+      regression_status: false
       ENV_ACCESS_KEY: ""
       ENV_SECRET_KEY: ""
       ENV_REGION: ""
