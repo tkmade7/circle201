@@ -42,7 +42,7 @@ jobs:
         default: regression_status
       QA_CHECK:
         type: string
-        default: ${image_name}
+        default: image_name
       image_name:
         type: string
       environ:
