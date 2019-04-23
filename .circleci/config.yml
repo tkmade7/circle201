@@ -66,15 +66,6 @@ commands:
                echo "ENV_REGION=$ENV_REGION"
             fi
 
-  install_cli:
-    description: "install aws cli"
-    steps:
-      - aws-cli/install
-      - aws-cli/configure:
-          aws-access-key-id: ${ENV_ACCESS_KEY}
-          aws-secret-access-key: ${ENV_SECRET_KEY}
-          aws-region: ${ENV_REGION}
-
 
 jobs:
   build_test_deploy:
@@ -97,7 +88,6 @@ jobs:
           source $BASH_ENV
           echo "local image_name = ${image_name}"
       - check_env_vars
-      - install_cli
       # - compile_test
       # - when:
           # condition: << parameters.REG_CHECK >>
