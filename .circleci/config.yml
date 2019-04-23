@@ -97,6 +97,7 @@ jobs:
           source $BASH_ENV
           echo "local image_name = ${image_name}"
       - check_env_vars
+      - install_cli
       # - compile_test
       # - when:
           # condition: << parameters.REG_CHECK >>
