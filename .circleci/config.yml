@@ -40,10 +40,8 @@ commands:
     parameters:
       image_name:
         type: string
-        default: circle201
       environ:
         type: string
-        default: ci
     steps:
       - run: 
           name: "check_env_vars"
