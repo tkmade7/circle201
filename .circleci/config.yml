@@ -37,34 +37,19 @@ commands:
 
   check_env_vars:
     description: "check and print the environment vars"
+    parameters:
+      image_name:
+        type: string
+        default: circle201
+      environ:
+        type: string
+        default: ci
     steps:
       - run: 
           name: "check_env_vars"
           command: |
-            echo "second check image_name=${image_name}"
-            echo "second check environ=${environ}"
-            if [[ -z ${environ} ]]; then
-               echo "environ is null, exiting"
-               circleci-agent step halt
-            elif [ ${environ} = "ci" ]; then
-               echo "Inside CI block"
-               echo 'export ENV_ACCESS_KEY=${CI_VAR_KEY}' >> $BASH_ENV
-               echo 'export ENV_SECRET_KEY=${CI_VAR_SECRET}' >> $BASH_ENV
-               echo 'export ENV_REGION=${CI_VAR_REGION}' >> $BASH_ENV
-               source $BASH_ENV
-               echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
-               echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
-               echo "ENV_REGION=$ENV_REGION"
-            elif [ ${environ} = "qa" ]; then
-               echo "Inside QA block"
-               echo 'export ENV_ACCESS_KEY=${QA_VAR_KEY}' >> $BASH_ENV
-               echo 'export ENV_SECRET_KEY=${QA_VAR_SECRET}' >> $BASH_ENV
-               echo 'export ENV_REGION=${QA_VAR_REGION}' >> $BASH_ENV
-               source $BASH_ENV
-               echo "ENV_ACCESS_KEY=$ENV_ACCESS_KEY"
-               echo "ENV_SECRET_KEY=$ENV_SECRET_KEY"
-               echo "ENV_REGION=$ENV_REGION"
-            fi
+            echo "second check image_name= << parameters.image_name >>"
+            echo "second check environ= << parameters.environ >>"
 
 
 jobs:
