@@ -75,8 +75,10 @@ jobs:
         default: regression_status
       image_name:
         type: string
+        default: circleman
       environ:
         type: string
+        default: someenv
     executor: sbt_executor
     steps:
       - checkout
